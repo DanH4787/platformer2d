@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
         {
             float xSpeed = Mathf.Abs(rigidBody.linearVelocity.x);
             animator.SetFloat("xspeed", xSpeed);
+            float ySpeed = Mathf.Abs(rigidBody.linearVelocity.y);
+            animator.SetFloat("yspeed", ySpeed);
             if (rigidBody.linearVelocity.x * transform.localScale.x < 0.0f)
                 transform.localScale = new Vector3(-transform.localScale.x,
                 transform.localScale.y, transform.localScale.z);
