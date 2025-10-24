@@ -6,10 +6,11 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     Rigidbody2D rigidBody;
     public float speed = 5.0f;
-    public float jumpForce = 8.0f;
+    public float jumpForce = 10.0f;
     public float airControlForce = 10.0f;
     public float airControlMax = 1.5f;
     public bool grounded;
+
     // Use this for initialization
     void Start()
     {
@@ -20,6 +21,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         {
+            float blinkVal = Random.Range(0.0f, 200.0f);
+            if (blinkVal < 1.0f)
+                animator.SetTrigger("blinktrigger");
             float xSpeed = Mathf.Abs(rigidBody.linearVelocity.x);
             animator.SetFloat("xspeed", xSpeed);
             float ySpeed = Mathf.Abs(rigidBody.linearVelocity.y);
