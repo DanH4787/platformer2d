@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float airControlForce = 10.0f;
     public float airControlMax = 1.5f;
     public bool grounded;
+    public AudioSource coinSound;
 
     // Use this for initialization
     void Start()
@@ -62,6 +63,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == 3)
         {
             grounded = false;
+        }
+    }
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag == "Coin")
+        {
+            Destroy(coll.gameObject);
+            coinSound.Play();
         }
     }
 }
