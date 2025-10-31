@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
+
+
 public class PlayerController : MonoBehaviour
 {
     Animator animator;
@@ -11,16 +15,23 @@ public class PlayerController : MonoBehaviour
     public float airControlMax = 1.5f;
     public bool grounded;
     public AudioSource coinSound;
-
+    public TextMeshProUGUI uiText;
+    int totalCoins;
+    int coinsCollected;
     // Use this for initialization
     void Start()
     {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
+        // find out how many coins in the level
+        coinsCollected = 0;
+        totalCoins = GameObject.FindGameObjectsWithTag("Coin").Length;
     }
     // Update is called once per frame
     void Update()
     {
+        string uiString = "x " + coinsCollected + "/" + totalCoins;
+        uiText.text = uiString;
         {
             float blinkVal = Random.Range(0.0f, 200.0f);
             if (blinkVal < 1.0f)
@@ -32,6 +43,8 @@ public class PlayerController : MonoBehaviour
             if (rigidBody.linearVelocity.x * transform.localScale.x < 0.0f)
                 transform.localScale = new Vector3(-transform.localScale.x,
                 transform.localScale.y, transform.localScale.z);
+
+            
         }
     }
     void FixedUpdate()
@@ -57,6 +70,11 @@ public class PlayerController : MonoBehaviour
         {
             grounded = true;
         }
+        if ( collision.gameObject.tag == "Death" )
+ {
+        SceneManager.LoadScene(0);
+ }
+
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -71,6 +89,8 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(coll.gameObject);
             coinSound.Play();
+            coinsCollected++;
         }
     }
+   
 }
